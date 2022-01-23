@@ -8,13 +8,14 @@ int main()
 {
     try {
         Stack<int> st;
-       // std::cout << st.head() << "\n";
+     //   std::cout << st.head() << "\n";
         for (int i = 1; i <= 32; i++)
             st.push(i);
        
         std::cout << st.head()<<"\n";
         st.pop();
         std::cout << st.head() << "\n";
+        
     }
     catch (std::out_of_range e) {
         std::cout << e.what();

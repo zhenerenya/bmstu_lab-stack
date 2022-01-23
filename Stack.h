@@ -16,6 +16,16 @@ private:
 public:
 	//пустой стек
 	Stack() : _head(nullptr), _size(0) {};
+	~Stack();
+	//конструктор копирования
+	Stack(const Stack&) = delete;
+	//оператор копирования
+	Stack& operator=(const Stack&) = delete;
+
+	//конструктор перемещения
+	Stack(Stack&& stack) noexcept;
+	//оператор перемещения
+	Stack& operator=(Stack&& stack) noexcept;
 
 	void push(T&& value); 
 	void push(const T& value); 
@@ -25,7 +35,34 @@ public:
 
 	template <typename ... Args>
 	void push_emplace(Args&&... value);
+
+	//void swap()
 };
+
+template <typename T>
+Stack<T>::Stack(Stack&& stack) noexcept {
+	_size = std::move(stack._size);
+	_head = std::move(stack._head);
+}
+
+template <typename T>
+Stack<T>& Stack<T>::operator=(Stack&& stack) noexcept {
+	if (&stack != this) {
+		std::swap(_size, stack._size);
+		std::swap(_head, stack._head);
+	}
+	return *this;
+}
+
+template <typename T>
+Stack<T>::~Stack() {
+	auto i = _head;
+	while (i != nullptr) {
+		auto new_i = i->pre;
+		delete i;
+		i = new_i;
+	}
+}
 
 template <typename T>
 void Stack<T>::push(T&& value) {
