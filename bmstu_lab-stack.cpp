@@ -7,14 +7,13 @@
 int main()
 {
     try {
-        Stack<int> st;
-     //   std::cout << st.head() << "\n";
-        for (int i = 1; i <= 32; i++)
-            st.push(i);
-       
-        std::cout << st.head()<<"\n";
-        st.pop();
-        std::cout << st.head() << "\n";
+
+        Stack<std::string>st_ch;
+        st_ch.push_emplace("abc", "love", "rules", "43", "452354");
+        std::cout << st_ch.head() << "\n";
+        std::string b = st_ch._pop();
+        std::cout << b << "\n";
+        std::cout << st_ch.head() << "\n";
         
     }
     catch (std::out_of_range e) {

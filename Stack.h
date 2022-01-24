@@ -104,14 +104,16 @@ const T& Stack<T>::head() const {
 template <typename T>
 template <typename ... Args>
 void Stack<T>::push_emplace(Args&&... value) {
-	_head = new el{ T{std::forward<Args>(value)...}, _head };  //forward в л ссылки 
-	++_size;
+	for (auto i : { std::forward<Args>(value)... }) {
+		_head = new el{ std::move(i), _head }; //правосторонн€€ ссыдка -> std::move
+		++_size;
+	}
 }
 
 template <typename T>
 T Stack<T>::_pop() {
-	const T& val = head();
+	T val = head();
 	pop();
-	return *val;
+	return val;
 }
 
